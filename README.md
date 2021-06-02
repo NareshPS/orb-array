@@ -1,11 +1,11 @@
 # orb-array
-*orb-array* aims to simplify common array operations that use functional programming constructs. The usage of map, reduce, filter, fill etc. APIs is often verbose. Our goal is to make their usage *less-verbose*
+The usage of map, reduce, filter, fill etc. APIs is often verbose. *orb-array* aims to make it *less-verbose*. 
 
 ## APIs
 ### split
-It splits an array into specified number of pieces. When the number of pieces is larger than the input size, it creates empty pieces. It always returns the specified number of pieces. Following are some examples:
+It splits an array into the specified number of pieces. When the number of pieces is larger than the input size, it creates empty pieces. It always returns the specified number of pieces. Some examples:
 ```js
-// Default is splitting from the middle.
+// Midway split is the default behavior.
 const items = [1, 2, 3, 4, 5]
 const pieces = split(items)
 // Output: [[1, 2, 3], [4, 5]]
@@ -32,7 +32,7 @@ const items = fill(5, v => v*2) // v is an item index
 ```
 
 ### zip
-It zips a bunch of arrays together. If the arrays vary in size, the output size is equal to the shortest array.
+It zips arrays together. When the array sizes vary, the output size is equal to the shortest array.
 ```js
 const items = range(5)
 const values = range(10)
@@ -42,7 +42,7 @@ const zipped = zip(items, values)
 ### reduce
 *reduce* support several operations.
 
-**reduce.o** reduces an array to an object. It supports customizations using key and value functions. In the absence of customizations, key and value are the input array items.
+**reduce.o** reduces an array to an object. It supports customizations using the key and the value functions. Without customizations, key and value are the input array items.
 ```js
 const items = range(5)
 const o = reduce.o(items)
@@ -54,7 +54,7 @@ const o = reduce.o(items, {value: v => v + 2})
 // Output: {0:2, 1:3, 2:4, 3:5, 4:6}
 ```
 
-**reduce.mul* multiplies together the elements of the input array. When the input contains a non-numerical value, the output is **NaN**. The boolean values are converted to their numerical form (0 or 1).
+**reduce.mul** multiplies elements of the input array together. When the input contains a non-numerical value, the output is **NaN**. The boolean values are converted to their numerical form (0 or 1).
 ```js
 const items = [1, 2, 5, 6]
 const result = reduce.mul(items)
