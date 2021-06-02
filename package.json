@@ -1,0 +1,43 @@
+{
+  "name": "orb-array",
+  "version": "1.0.0",
+  "description": "Less Verbose Array Usage",
+  "main": "./src/index.js",
+  "files": [
+    "src/**/!(*.test.js)",
+    "dist"
+  ],
+  "directories": {
+    "dist": "dist",
+    "src": "src"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "test": "ava \"**/*.test.js\"",
+    "watchtest": "ava \"**/*.test.js\" --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NareshPS/orb-array.git"
+  },
+  "keywords": [
+    "array",
+    "lessverbose",
+    "functions"
+  ],
+  "author": "NareshPS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NareshPS/orb-array/issues"
+  },
+  "homepage": "https://github.com/NareshPS/orb-array#readme",
+  "dependencies": {
+    "orb-functions": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "^3.15.0",
+    "source-map-loader": "^3.0.0",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  }
+}
