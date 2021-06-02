@@ -1,8 +1,20 @@
 # orb-array
-The usage of map, reduce, filter, fill etc. APIs is often verbose. *orb-array* aims to make it *less-verbose*. 
+The usage of map, reduce, filter, fill etc. APIs is often verbose. *orb-array* aims to make it *less-verbose*.
 
-## APIs
-### split
+# Installation
+Browser Installation. The module is exported as *orbarr* global variable.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/orb-array@1.0.0/dist/index.js"></script>
+```
+
+Node Installation
+```js
+npm install orb-array
+```
+
+# APIs
+## split
 It splits an array into the specified number of pieces. When the number of pieces is larger than the input size, it creates empty pieces. It always returns the specified number of pieces. Some examples:
 ```js
 // Midway split is the default behavior.
@@ -17,21 +29,21 @@ const pieces = split(items, 10)
 // Output: [[1], [2], [3], [4], [5], [], [], [], [], []]
 ```
 
-### range
+## range
 It generates numbers in a given range, starting with 0.
 ```js
 const items = range(5)
 // Output: [0, 1, 2, 3, 4]
 ```
 
-### fill
+## fill
 It generates a range of values using a function.
 ```js
 const items = fill(5, v => v*2) // v is an item index
 // Output: [0, 2, 4, 6, 8]
 ```
 
-### zip
+## zip
 It zips arrays together. When the array sizes vary, the output size is equal to the shortest array.
 ```js
 const items = range(5)
@@ -39,7 +51,7 @@ const values = range(10)
 const zipped = zip(items, values)
 // Output: [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4]]
 ```
-### reduce
+## reduce
 *reduce* support several operations.
 
 **reduce.o** reduces an array to an object. It supports customizations using the key and the value functions. Without customizations, key and value are the input array items.
@@ -66,7 +78,7 @@ const result = reduce.mul([])
 // Output: 1
 ```
 
-### map
+## map
 *map* supports several operations.
 
 **map.scale** uses the input factor to scale elements.
