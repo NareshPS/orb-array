@@ -1,5 +1,5 @@
 # orb-array
-The usage of map, reduce, filter, fill etc. APIs is often verbose. *orb-array* aims to make it *less-verbose*.
+*orb-array* exposes concise APIs to manipulate arrays.
 
 # Installation
 Browser Installation. The module is exported as *orbarr* global variable.
