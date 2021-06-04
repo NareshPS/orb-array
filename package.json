@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js",
+    "local": "webpack --config webpack.dev.config.js",
     "test": "ava \"**/*.test.js\"",
     "watchtest": "ava \"**/*.test.js\" --watch"
   },
