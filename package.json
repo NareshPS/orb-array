@@ -23,8 +23,16 @@
   },
   "keywords": [
     "array",
-    "lessverbose",
-    "functions"
+    "concise",
+    "fill",
+    "map",
+    "multiply",
+    "orb-array",
+    "range",
+    "reduce",
+    "scale",
+    "split",
+    "zip"
   ],
   "author": "NareshPS",
   "license": "MIT",
