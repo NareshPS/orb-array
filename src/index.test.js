@@ -1,27 +1,28 @@
 const test = require('ava')
-const { split, range, fill, zip, reduce, map } = require('./index.js')
+const functions = require('orb-functions')
+const { split, range, fill, zip, reduce, map, ranges, last, resolveAddress, repeat } = require('./index.js')
 
 /////////////////////////// map.scale [start] /////////////////////////
-test('map-scale-no-args', t => {
+test('map.scale-no-args', t => {
   const o = map.scale()
 
   t.deepEqual(o, [])
 })
 
-test('map-scale-empty-items', t => {
+test('map.scale-empty-items', t => {
   const o = map.scale([])
 
   t.deepEqual(o, [])
 })
 
-test('map-scale-list-no-scaling-factor', t => {
+test('map.scale-list-no-scaling-factor', t => {
   const items = [1, 2, 5, 6]
   const o = map.scale(items)
 
   t.deepEqual(o, items)
 })
 
-test('map-scale-list-with-scaling-factor', t => {
+test('map.scale-list-with-scaling-factor', t => {
   const items = [1, 2, 5, 6]
   const o = map.scale(items, 2)
 
@@ -30,33 +31,33 @@ test('map-scale-list-with-scaling-factor', t => {
 /////////////////////////// map.scale [end] ///////////////////////////
 
 /////////////////////////// reduce.mul [start] /////////////////////////
-test('reduce-mul-no-args', t => {
+test('reduce.mul-no-args', t => {
   const o = reduce.mul()
 
   t.is(o, 1)
 })
 
-test('reduce-mul-empty-items', t => {
+test('reduce.mul-empty-items', t => {
   const o = reduce.mul([])
 
   t.is(o, 1)
 })
 
-test('reduce-mul-list', t => {
+test('reduce.mul-list', t => {
   const items = [1, 2, 5, 6]
   const o = reduce.mul(items)
 
   t.is(o, 60)
 })
 
-test('reduce-mul-list-with-some-strings', t => {
+test('reduce.mul-list-with-some-strings', t => {
   const items = [1, 2, "hello", 6]
   const o = reduce.mul(items)
 
   t.truthy(Number.isNaN(o))
 })
 
-test('reduce-mul-list-with-some-boolean', t => {
+test('reduce.mul-list-with-some-boolean', t => {
   const items = [1, 2, 3, true]
   const o = reduce.mul(items)
 
@@ -65,39 +66,102 @@ test('reduce-mul-list-with-some-boolean', t => {
 /////////////////////////// reduce.mul [end] /////////////////////////
 
 /////////////////////////// reduce.o [start] /////////////////////////
-test('reduce-o-no-args', t => {
+test('reduce.o-no-args', t => {
   const o = reduce.o()
 
   t.deepEqual(o, {})
 })
 
-test('reduce-o-empty-items', t => {
+test('reduce.o-empty-items', t => {
   const o = reduce.o([])
 
   t.deepEqual(o, {})
 })
 
-test('reduce-o-list', t => {
+test('reduce.o-list', t => {
   const items = [1, 2, 5, 6]
   const o = reduce.o(items)
 
   t.deepEqual(o, {1:1, 2:2, 5:5, 6:6})
 })
 
-test('reduce-o-list-with-keyfn-and-valuefn', t => {
+test('reduce.o-list-with-keyfn-and-valuefn', t => {
   const items = [1, 2, 5, 6]
   const o = reduce.o(items, {key: k => k**2, value: v => v + 2})
 
   t.deepEqual(o, {1:3, 4:4, 25:7, 36:8})
 })
 
-test('reduce-o-list-with-keyfn-and-valuefn-using-indices', t => {
+test('reduce.o-list-with-keyfn-and-valuefn-using-indices', t => {
   const items = [1, 2, 5, 6]
   const o = reduce.o(items, {key: (k, i) => k*i, value: (v, i) => v+i})
 
   t.deepEqual(o, {0:1, 2:3, 10:7, 18:9})
 })
 /////////////////////////// reduce.o [end] ///////////////////////////
+
+/////////////////////////// reduce.a [start] ///////////////////////////
+test('reduce.a-no-args', t => {
+  const o = reduce.a()
+
+  t.deepEqual(o, [])
+})
+
+test('reduce.a-with-items', t => {
+  const items = [1, 2, 5, 6]
+  const o = reduce.a(items)
+
+  t.deepEqual(o, items)
+})
+
+test('reduce.a-with-items-and-valuefn', t => {
+  const items = [1, 2, 5, 6]
+  const vfn = v => 2*v
+  const o = reduce.a(items, {value: vfn})
+
+  t.deepEqual(o, map.scale(items, 2))
+})
+
+test('reduce.a-with-items-and-valuefn-and-container', t => {
+  const items = [1, 2, 5, 6]
+  const vfn = v => 2*v
+  const container = [20]
+  const o = reduce.a(items, {value: vfn, container})
+
+  t.deepEqual(container, [20, ...map.scale(items, 2)])
+  t.deepEqual(o, container)
+})
+/////////////////////////// reduce.a [end] ///////////////////////////
+
+/////////////////////////// reduce.rollingmul [start] ///////////////////////////
+test('reduce.rollingmul-no-args', t => {
+  const o = reduce.rollingmul()
+
+  t.deepEqual(o, [])
+})
+
+test('reduce.rollingmul-with-items', t => {
+  const items = [1, 2, 5, 6]
+  const o = reduce.rollingmul(items)
+
+  t.deepEqual(o, [1, 2, 10, 60])
+})
+/////////////////////////// reduce.rollingmul [end] ///////////////////////////
+
+/////////////////////////// reduce.sum [start] ///////////////////////////
+test('reduce.sum-no-args', t => {
+  const o = reduce.sum()
+
+  t.is(o, 0)
+})
+
+test('reduce.sum-with-items', t => {
+  const items = [1, 2, 3, 4, 6]
+  const o = reduce.sum(items)
+
+  t.is(o, 16)
+})
+/////////////////////////// reduce.sum [end] ///////////////////////////
 
 /////////////////////////// zip [start] ///////////////////////////
 test('zip-no-args', t => {
@@ -264,3 +328,103 @@ test('split-each-one-gets-some', t => {
   })
 })
 /////////////////////////// split [end] ///////////////////////////
+
+/////////////////////////// ranges [start] ///////////////////////////
+test('ranges-no-args', t => {
+  const o = ranges()
+
+  t.deepEqual(o, [])
+})
+
+test('ranges-with-single-size', t => {
+  const o = ranges(4)
+
+  t.deepEqual(o, [[0], [1], [2], [3]])
+})
+
+test('ranges-with-multiple-size', t => {
+  const o = ranges(2, 3)
+
+  t.deepEqual(o, [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2]])
+})
+/////////////////////////// ranges [end] ///////////////////////////
+
+/////////////////////////// last [start] ///////////////////////////
+test('last-no-args', t => {
+  const o = last()
+
+  t.is(o, undefined)
+})
+
+test('last-with-single-input', t => {
+  const input = 'last-input'
+  const o = last(input)
+
+  t.is(o, input)
+})
+
+test('last-with-single-item', t => {
+  const items = ['last-input']
+  const o = last(items)
+
+  t.is(o, 'last-input')
+})
+
+test('last-with-multiple-items', t => {
+  const items = ['last-input0', 'last-input1', 'last-input2']
+  const o = last(items)
+
+  t.is(o, 'last-input2')
+})
+/////////////////////////// last [end] ///////////////////////////
+
+/////////////////////////// resolveAddress [start] ///////////////////////////
+test('resolveAddress-no-args', t => {
+  const o = resolveAddress()
+
+  t.deepEqual(o, [])
+})
+
+test('resolveAddress-with-value', t => {
+  const value = ['address0']
+  const o = resolveAddress(value)
+
+  t.deepEqual(o, value)
+})
+
+test('resolveAddress-with-1d-address', t => {
+  const value = ['address0', 'address1']
+  const o = resolveAddress(value, [1])
+
+  t.deepEqual(o, 'address1')
+})
+
+test('resolveAddress-with-2d-address', t => {
+  const value = [['address00'], ['address10', 'address11'], 'address20']
+  const o = resolveAddress(value, [1, 1])
+
+  t.deepEqual(o, 'address11')
+})
+/////////////////////////// resolveAddress [end] ///////////////////////////
+
+/////////////////////////// repeat [start] ///////////////////////////
+test('repeat-no-args', t => {
+  const o = repeat()
+
+  t.deepEqual(o, [undefined, undefined])
+})
+
+test('repeat-with-object', t => {
+  const input = {tree: 'tonmayi'}
+  const o = repeat(input)
+
+  t.deepEqual(o, [input, input])
+})
+
+test('repeat-with-object-and-count', t => {
+  const input = {tree: 'tonmayi'}
+  const o = repeat(input, 5)
+
+  t.deepEqual(o, fill(6, functions.constant(input)))
+})
+/////////////////////////// repeat [end] ///////////////////////////
