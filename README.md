@@ -5,7 +5,7 @@
 Browser Installation. The module is exported as *orbarr* global variable.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/orb-array@1.0.0/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/orb-array@latest/dist/index.js"></script>
 ```
 
 Node Installation
