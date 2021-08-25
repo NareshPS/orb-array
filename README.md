@@ -13,6 +13,10 @@ Node Installation
 npm install orb-array
 ```
 
+# Versions
+## 2.0
+* **Breaking**: ***reduce.a*** is moved to ***map.a***.
+
 # APIs
 ## split
 It splits an array into the specified number of pieces. When the number of pieces is larger than the input size, it creates empty pieces. It always returns the specified number of pieces. Some examples:
