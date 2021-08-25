@@ -24,9 +24,6 @@ const reduce = {
   o: (items = [], {key: kfn = self, value: vfn = self} = {}) =>
   items.reduce((c /** container */, v, index) => (c[kfn(v, index)] = vfn(v, index), c), {}),
 
-  a: (items = [], {value: vfn = self, container = []} = {}) =>
-  items.reduce((c /** container */, v, index) => (c.push(vfn(v, index)), c), container),
-
   mul: (items = []) => items.reduce((v, vi) => v*vi, 1),
   rollingmul: ([first, ...rest] = []) => rest.reduce(
     (container, item) => (
@@ -39,6 +36,9 @@ const reduce = {
 }
 
 const map = {
+  a: (items = [], {value: vfn = self, container = []} = {}) =>
+  items.reduce((c /** container */, v, index) => (c.push(vfn(v, index)), c), container),
+
   scale: (items = [], factor = 1) => items.map((item) => item*factor),
 }
 

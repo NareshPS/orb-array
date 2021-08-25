@@ -1,6 +1,6 @@
 {
   "name": "orb-array",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "Concise Array Programming",
   "main": "./src/index.js",
   "files": [

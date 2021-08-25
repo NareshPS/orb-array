@@ -66,23 +66,6 @@ const o = reduce.o(items, {value: v => v + 2})
 // Output: {0:2, 1:3, 2:4, 3:5, 4:6}
 ```
 
-**reduce.a** transforms an array. A value function is applied to the original values. A custom container can be used to store the results. Some examples:
-```js
-// Simple Example
-const items = range(5)
-const o = reduce.a(items)
-// Output: [0, 1, 2, 3, 4]
-```
-
-```js
-// Using value function and a container
-const items = [1, 2, 5, 6]
-const vfn = v => 2*v
-const container = [20]
-const o = reduce.a(items, {value: vfn, container})
-// Output: [20, 2, 4, 10, 60]
-```
-
 **reduce.mul** multiplies together all the elements of an array. When the input contains a non-numerical value, the output is **NaN**. The boolean values are converted to their numerical form (0 or 1).
 ```js
 const items = [1, 2, 5, 6]
@@ -119,6 +102,23 @@ const o = reduce.sum(items)
 const items = range(5)
 const scaled = map.scale(items, 2)
 // Output: [0, 2, 4, 6, 8]
+```
+
+**map.a** transforms an array. A value function is applied to the original values. A custom container can be used to store the results. Some examples:
+```js
+// Simple Example
+const items = range(5)
+const o = map.a(items)
+// Output: [0, 1, 2, 3, 4]
+```
+
+```js
+// Using value function and a container
+const items = [1, 2, 5, 6]
+const vfn = v => 2*v
+const container = [20]
+const o = map.a(items, {value: vfn, container})
+// Output: [20, 2, 4, 10, 60]
 ```
 
 ## last

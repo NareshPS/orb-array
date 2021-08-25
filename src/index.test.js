@@ -30,6 +30,39 @@ test('map.scale-list-with-scaling-factor', t => {
 })
 /////////////////////////// map.scale [end] ///////////////////////////
 
+/////////////////////////// map.a [start] ///////////////////////////
+test('map.a-no-args', t => {
+  const o = map.a()
+
+  t.deepEqual(o, [])
+})
+
+test('map.a-with-items', t => {
+  const items = [1, 2, 5, 6]
+  const o = map.a(items)
+
+  t.deepEqual(o, items)
+})
+
+test('map.a-with-items-and-valuefn', t => {
+  const items = [1, 2, 5, 6]
+  const vfn = v => 2*v
+  const o = map.a(items, {value: vfn})
+
+  t.deepEqual(o, map.scale(items, 2))
+})
+
+test('map.a-with-items-and-valuefn-and-container', t => {
+  const items = [1, 2, 5, 6]
+  const vfn = v => 2*v
+  const container = [20]
+  const o = map.a(items, {value: vfn, container})
+
+  t.deepEqual(container, [20, ...map.scale(items, 2)])
+  t.deepEqual(o, container)
+})
+/////////////////////////// map.a [end] ///////////////////////////
+
 /////////////////////////// reduce.mul [start] /////////////////////////
 test('reduce.mul-no-args', t => {
   const o = reduce.mul()
@@ -99,39 +132,6 @@ test('reduce.o-list-with-keyfn-and-valuefn-using-indices', t => {
   t.deepEqual(o, {0:1, 2:3, 10:7, 18:9})
 })
 /////////////////////////// reduce.o [end] ///////////////////////////
-
-/////////////////////////// reduce.a [start] ///////////////////////////
-test('reduce.a-no-args', t => {
-  const o = reduce.a()
-
-  t.deepEqual(o, [])
-})
-
-test('reduce.a-with-items', t => {
-  const items = [1, 2, 5, 6]
-  const o = reduce.a(items)
-
-  t.deepEqual(o, items)
-})
-
-test('reduce.a-with-items-and-valuefn', t => {
-  const items = [1, 2, 5, 6]
-  const vfn = v => 2*v
-  const o = reduce.a(items, {value: vfn})
-
-  t.deepEqual(o, map.scale(items, 2))
-})
-
-test('reduce.a-with-items-and-valuefn-and-container', t => {
-  const items = [1, 2, 5, 6]
-  const vfn = v => 2*v
-  const container = [20]
-  const o = reduce.a(items, {value: vfn, container})
-
-  t.deepEqual(container, [20, ...map.scale(items, 2)])
-  t.deepEqual(o, container)
-})
-/////////////////////////// reduce.a [end] ///////////////////////////
 
 /////////////////////////// reduce.rollingmul [start] ///////////////////////////
 test('reduce.rollingmul-no-args', t => {
